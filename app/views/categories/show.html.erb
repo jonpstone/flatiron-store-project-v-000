@@ -2,6 +2,10 @@
 
 <ul>
 <% @category.items.each do |item| %>
-    <li><%= link_to item.title, item_path(item) %></li>
+  <% if current_user %>
+    <li><%= link_to item.title + " $#{item.price.to_f/100}", item_path(item) %><%= button_to 'Add to Cart', line_items_path(item_id: item), class: "btn btn-info" %></li>
+  <% else %>
+    <li><%= link_to item.title + " $#{item.price.to_f/100}", item_path(item) %></li>
+  <% end %>
 <% end %>
 </ul>

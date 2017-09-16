@@ -1,7 +1,15 @@
+<ul class="nav nav-pills">
 <% @categories.each do |category| %>
-  <%= link_to category.title, category_path(category) %>
+    <li role="presentation"><%= link_to category.title, category_path(category) %></li>
 <% end %>
+</ul>
 
-<% @items.each do |item| %>
-  <p><%= item.title %> | <%= number_to_currency(item.price) %> | <%= button_to 'Add to Cart', line_items_path(item_id: item) %></p>
-<% end %>
+<ul class="list-group">
+  <% @items.each do |item| %>
+    <% if current_user %>
+      <li class="list-group-item"><%= item.title %> |  <%= "$#{item.price.to_f/100}" %> | <%= button_to 'Add to Cart', line_items_path(item_id: item), class: "btn btn-info" %></li>
+    <% else %>
+      <li class="list-group-item"><%= item.title %> |  <%= "$#{item.price.to_f/100}" %></li>
+    <% end %>
+  <% end %>
+</ul>
